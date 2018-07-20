@@ -168,13 +168,13 @@ private extension OnboardingContentViewItem {
         // add constratints
         informationImageWidthConstraint = imageView >>>- {
             $0.attribute = NSLayoutAttribute.width
-            $0.constant = 188
+            $0.constant = UIScreen.main.bounds.width * 0.94
             return
         }
         
         informationImageHeightConstraint = imageView >>>- {
             $0.attribute = NSLayoutAttribute.height
-            $0.constant = 188
+            $0.constant = UIScreen.main.bounds.height * 0.5
             return
         }
 
