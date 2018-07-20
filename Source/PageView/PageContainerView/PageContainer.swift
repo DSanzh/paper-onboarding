@@ -55,7 +55,7 @@ extension PageContrainer {
 extension PageContrainer {
 
     fileprivate func animationItem(_ item: PageViewItem, selected: Bool, duration: Double, fillColor: Bool = false) {
-        let toValue = selected == true ? selectedItemRadius * 2 : itemRadius * 2
+        let toValue = selected == true ? selectedItemRadius : itemRadius * 2
         item.constraints
             .filter { $0.identifier == "animationKey" }
             .forEach {
@@ -66,7 +66,7 @@ extension PageContrainer {
             self.layoutIfNeeded()
         }, completion: nil)
 
-        item.animationSelected(selected, duration: duration, fillColor: fillColor)
+        item.animationSelected(false, duration: duration, fillColor: fillColor)
     }
 }
 

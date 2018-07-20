@@ -16,7 +16,7 @@ class PageViewItem: UIView {
     let itemColor: UIColor
 
     var select: Bool
-
+    let notFilledColor = UIColor(red: 77/255.0, green: 162/255.0, blue: 136/255.0, alpha: 1.0)
     var centerView: UIView?
     var imageView: UIImageView?
     var circleLayer: CAShapeLayer?
@@ -46,8 +46,8 @@ extension PageViewItem {
         imageAlphaAnimation(toAlpha, duration: duration)
 
         let currentRadius = selected == true ? selectedCircleRadius : circleRadius
-        let scaleAnimation = circleScaleAnimation(currentRadius - lineWidth / 2.0, duration: duration)
-        let toColor = fillColor == true ? itemColor : UIColor.clear
+        let scaleAnimation = circleScaleAnimation(currentRadius, duration: duration)
+        let toColor = fillColor == true ? itemColor : UIColor.red
         let colorAnimation = circleBackgroundAnimation(toColor, duration: duration)
 
         circleLayer?.add(scaleAnimation, forKey: nil)
@@ -72,7 +72,7 @@ extension PageViewItem {
         addSubview(view)
 
         // create circle layer
-        let currentRadius = select == true ? selectedCircleRadius : circleRadius
+        let currentRadius = select == true ? circleRadius : circleRadius
         let circleLayer = createCircleLayer(currentRadius, lineWidth: lineWidth)
         view.layer.addSublayer(circleLayer)
         self.circleLayer = circleLayer
@@ -97,9 +97,9 @@ extension PageViewItem {
         let path = UIBezierPath(arcCenter: CGPoint.zero, radius: radius - lineWidth / 2.0, startAngle: 0, endAngle: CGFloat(2.0 * Double.pi), clockwise: true)
         let layer = Init(CAShapeLayer()) {
             $0.path = path.cgPath
-            $0.lineWidth = lineWidth
+            $0.lineWidth = 0
             $0.strokeColor = itemColor.cgColor
-            $0.fillColor = UIColor.clear.cgColor
+            $0.fillColor = notFilledColor.cgColor
         }
         return layer
     }

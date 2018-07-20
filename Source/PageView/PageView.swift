@@ -11,10 +11,10 @@ import UIKit
 class PageView: UIView {
 
     var itemsCount = 3
-    var itemRadius: CGFloat = 8.0
-    var selectedItemRadius: CGFloat = 22.0
+    var itemRadius: CGFloat = 6.0
+    var selectedItemRadius: CGFloat = 6.0
     var duration: Double = 0.7
-    var space: CGFloat = 20 // space between items
+    var space: CGFloat = 5 // space between items
     let itemColor: (Int) -> UIColor
 
     // configure items set image or chage color for border view
@@ -166,7 +166,8 @@ extension PageView {
         }
 
         let containerWidth = CGFloat(itemsCount + 1) * selectedItemRadius + space * CGFloat(itemsCount - 1)
-        let toValue = containerWidth / 2.0 - selectedItemRadius - (selectedItemRadius + space) * CGFloat(index)
+//        let toValue = containerWidth / 2.0 - selectedItemRadius - (selectedItemRadius + space) * CGFloat(index)
+        let toValue = CGFloat(0.0) // made page control in center
         containerX.constant = toValue
 
         if animated == true {
