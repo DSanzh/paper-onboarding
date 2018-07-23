@@ -19,18 +19,49 @@ class PageContrainer: UIView {
     fileprivate let itemsCount: Int
     fileprivate let animationKey = "animationKey"
 
+    fileprivate let pageControl = UIPageControl()
+
     init(radius: CGFloat, selectedRadius: CGFloat, space: CGFloat, itemsCount: Int, itemColor: (Int) -> UIColor) {
         self.itemsCount = itemsCount
         self.space = space
         itemRadius = radius
         selectedItemRadius = selectedRadius
         super.init(frame: CGRect.zero)
-        items = createItems(itemsCount, radius: radius, selectedRadius: selectedRadius, itemColor: itemColor)
+        initializePageControl()
+//        items = createItems(itemsCount, radius: radius, selectedRadius: selectedRadius, itemColor: itemColor)
     }
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        pageControl.subviews.forEach {
+            $0.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }
+    }
+
+    private func initializePageControl() {
+        addSubview(pageControl)
+        let selectedColor = UIColor(red: 255/255.0, green: 189/255.0, blue: 36/255.0, alpha: 1.0)
+        let unselectedColor = UIColor(red: 77/255.0, green: 162/255.0, blue: 136/255.0, alpha: 1.0)
+        pageControl.currentPageIndicatorTintColor = selectedColor
+        pageControl.currentPage = 1
+        pageControl.pageIndicatorTintColor = unselectedColor
+        pageControl.numberOfPages = itemsCount
+        pageControl.hidesForSinglePage = true
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+
+        if #available(iOS 9.0, *) {
+            let viewMargin = self.layoutMarginsGuide
+            pageControl.centerXAnchor.constraint(equalTo: viewMargin.centerXAnchor).isActive = true
+            pageControl.centerYAnchor.constraint(equalTo: viewMargin.centerYAnchor).isActive = true
+        } else {
+            fatalError("Crash setting up contraints for pageControl in paper-onboarding/pageview/pageContainerView")
+        }
+    }
+
 }
 
 // MARK: public
@@ -38,15 +69,16 @@ class PageContrainer: UIView {
 extension PageContrainer {
 
     func currenteIndex(_ index: Int, duration: Double, animated _: Bool) {
-        guard let items = self.items,
-            index != currentIndex else { return }
-
-        animationItem(items[index], selected: true, duration: duration)
-
-        let fillColor = index > currentIndex ? true : false
-        animationItem(items[currentIndex], selected: false, duration: duration, fillColor: fillColor)
-
-        currentIndex = index
+        pageControl.currentPage = index
+//        guard let items = self.items,
+//            index != currentIndex else { return }
+//
+//        animationItem(items[index], selected: true, duration: duration)
+//
+//        let fillColor = index > currentIndex ? true : false
+//        animationItem(items[currentIndex], selected: false, duration: duration, fillColor: fillColor)
+//
+//        currentIndex = index
     }
 }
 

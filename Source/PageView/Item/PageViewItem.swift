@@ -139,7 +139,7 @@ extension PageViewItem {
     fileprivate func circleBackgroundAnimation(_ toColor: UIColor, duration: Double) -> CABasicAnimation {
         let animation = Init(CABasicAnimation(keyPath: "fillColor")) {
             $0.duration = duration
-            $0.toValue = toColor.cgColor
+            $0.toValue = notFilledColor.cgColor
             $0.isRemovedOnCompletion = false
             $0.fillMode = kCAFillModeForwards
             $0.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
